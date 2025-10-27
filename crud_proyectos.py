@@ -57,4 +57,4 @@ def registrar_proyecto(conn: sqlite3.Connection) -> None:
 
     try:
         conn.execute("BEGIN TRANSACTION;")
-        cursor.execute
+        
