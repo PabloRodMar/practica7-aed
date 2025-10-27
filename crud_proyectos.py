@@ -2,6 +2,7 @@ import sqlite3
 import conexion, utilidades
 
 ######################## Funciones internas ########################
+
 def pedir_cliente(conn: sqlite3.Connection) -> str:
     cliente = input("Introduzca el ID del cliente que solicita el proyecto: ")
     cli_encontrado = utilidades.buscar_cliente(conn, cliente)
@@ -53,3 +54,7 @@ def registrar_proyecto(conn: sqlite3.Connection) -> None:
     while not fecha_valida:
         print("Error: Fecha inválida. Inténtelo de nuevo.")
         fecha_fin, fecha_valida = pedir_fecha()
+
+    try:
+        conn.execute("BEGIN TRANSACTION;")
+        cursor.execute
