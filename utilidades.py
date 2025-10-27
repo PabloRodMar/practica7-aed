@@ -1,5 +1,7 @@
 import sqlite3
 
+############################ Validaciones ############################
+
 def validar_tlf() -> int:
     while True:
         try:
@@ -39,6 +41,27 @@ def validar_email() -> bool:
             break
 
     return True
+
+def validar_fecha(fecha: str) -> bool:
+    try:
+        if type(int(fecha[0:3])) != int: # Año
+            return False
+        if fecha[4] != '-': # Separador
+            return False
+        if type(int(fecha[5:6])) != int or int(fecha[5:6]) > 12 or fecha[5:6] < 1: # Mes
+            return False
+        if fecha[7] != '-': # Separador
+            return False
+        if type(int(fecha[8:9])) != int or int(fecha[8:9]) > 31 or fecha[8:9] < 1: # Dia
+            return False
+        return True
+    except ValueError:
+        print("Error: La fecha es inválida: Sólo se permiten números y el separador '-'.")
+    except Exception as e:
+        print("Error: Se ha producido un error: ", e)
+        
+
+############################ Comprobar que existen ############################
 
 def buscar_cliente(conexion: sqlite3.Connection, id_cliente: str) -> bool:
     try:
@@ -89,6 +112,25 @@ def buscar_proyecto(conexion: sqlite3.Connection, id_proyecto: str) -> bool:
             return False
         else:
             return True
+    
+    except sqlite3.OperationalError as e:
+        print(f"Error de operación en SQLite: {e}")
+    except sqlite3.DatabaseError as e:
+        print(f"Error en la base de datos: {e}")
+    except Exception as e:
+        print("Algo fue mal: ", e)
+
+def proyecto_repetido(conexion: sqlite3.Connection, nombre: str) -> bool:
+    try:
+        cursor = conexion.cursor()
+        contenido = cursor.execute(f'''
+            SELECT * FROM Proyecto WHERE titulo_proyecto = '{nombre}'
+        ''')
+        datos = contenido.fetchall()
+        if not datos:
+            return True
+        else:
+            return False
     
     except sqlite3.OperationalError as e:
         print(f"Error de operación en SQLite: {e}")
