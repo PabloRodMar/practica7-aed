@@ -4,7 +4,7 @@ import os
 def menu() -> int:
 
     print("Base de datos de una empresa cualquiera.")
-    print("\n1. Insertar proyecto.")
+    print("1. Insertar proyecto.")
     print("2. Eliminar proyecto.")
     print("3. Transferir proyecto.")
     print("0. Salir\n")
@@ -45,11 +45,15 @@ if __name__ == '__main__':
             case 2:
                 os.system('cls')
 
+                crud_proyectos.eliminar_proyecto(conexion_bd)
+
                 input("Pulse ENTER para continuar")
                 os.system('cls')
 
             case 3:
                 os.system('cls')
+
+                crud_proyectos.transferir_proyecto(conexion_bd)
 
                 input("Pulse ENTER para continuar")
                 os.system('cls')

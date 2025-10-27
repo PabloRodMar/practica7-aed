@@ -44,15 +44,16 @@ def validar_email() -> bool:
 
 def validar_fecha(fecha: str) -> bool:
     try:
-        if type(int(fecha[0:3])) != int: # Año
-            return False
+        ano, mes, dia = fecha.split('-')
         if fecha[4] != '-': # Separador
             return False
-        if type(int(fecha[5:6])) != int or int(fecha[5:6]) > 12 or fecha[5:6] < 1: # Mes
+        if int(mes) > 12 or int(mes) < 1: # Mes
+            print("Fallo en mes")
             return False
         if fecha[7] != '-': # Separador
             return False
-        if type(int(fecha[8:9])) != int or int(fecha[8:9]) > 31 or fecha[8:9] < 1: # Dia
+        if int(dia) > 31 or int(dia) < 1: # Dia
+            print("Fallo en dia")
             return False
         return True
     except ValueError:
